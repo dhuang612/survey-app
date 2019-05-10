@@ -1,35 +1,14 @@
 const express = require('express');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const mongoose = require('mongoose');
 const keys = require('./config/keys');
-
+mongoose.connect(keys.mongoURI);
 const app = express();
-
-//creates a new instance of google auth
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback'
-    },
-    (accessToken, refreshToken, profile, done) => {
-      console.log('access token: ', accessToken);
-      console.log('profile: ', profile);
-      console.log('refresh token: ', refreshToken);
-    }
-  )
-);
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })
-);
-
-app.get('/auth/google/callback', passport.authenticate('google'));
-
+//user's schema that we need to require mongoose order of operations matter
+require('./models/User');
+require('./services/passport');
+//this can be left as a require statement because it doesn't need to be passed anything.
+require('./routes/authRoutes')(app);
 /*
 you use google developers console to gen the application
 you then pass in the client ID
