@@ -9,4 +9,17 @@ module.exports = app => {
   );
 
   app.get('/auth/google/callback', passport.authenticate('google'));
+
+  app.get('/api/logout', (req, res) => {
+    req.logout();
+    res.send(req.user);
+  });
+  app.get('/api/current_user', (req, res) => {
+    res.send(req.user);
+  });
 };
+
+/*
+This is the same as our controller in the more recent app.
+we setup routes inside of our controller to be able to make changes to our data.
+*/
