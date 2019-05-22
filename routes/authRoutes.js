@@ -20,5 +20,6 @@ module.exports = app => {
 };
 
 /*
-
+This is the same as our controller in the more recent app.
+we setup routes inside of our controller to be able to make changes to our data.
 */
