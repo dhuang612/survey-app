@@ -4,16 +4,16 @@ module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      scope: ['openid', 'profile', 'email']
+      scope: [
+        'https://www.googleapis.com/auth/plus.login',
+        'openid',
+        'profile',
+        'email'
+      ]
     })
   );
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google', {
-      scope: 'https://www.googleapis.com/auth/plus.login'
-    })
-  );
+  app.get('/auth/google/callback', passport.authenticate('google'));
 
   app.get('/api/logout', (req, res) => {
     req.logout();
