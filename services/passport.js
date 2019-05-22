@@ -25,8 +25,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL:
-        'http://lit-everglades-64717.herokuapp.com/auth/google/callback',
+      callbackURL: '/auth/google/callback',
       proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
