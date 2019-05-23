@@ -4,12 +4,7 @@ module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      scope: [
-        'https://www.googleapis.com/auth/plus.login',
-        'openid',
-        'profile',
-        'email'
-      ]
+      scope: ['profile', 'email']
     })
   );
 
