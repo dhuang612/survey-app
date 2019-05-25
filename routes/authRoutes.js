@@ -7,18 +7,18 @@ module.exports = app => {
       scope: ['profile', 'email']
     })
   );
-
+  //if there are errors related to logging in capture them.
   app.get('/auth/google/callback', function(req, res, next) {
     passport.authenticate('google', function(err, user, info) {
       if (err) {
-        return next(err);
+        return console.log(next(err));
       }
       if (!user) {
         return res.redirect('/');
       }
       req.logIn(user, function(err) {
         if (err) {
-          return next(err);
+          return console.log(next(err));
         }
         return res.redirect('/');
       });
