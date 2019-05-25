@@ -10,6 +10,8 @@ passport.serializeUser((user, done) => {
   /*  
   After they are in our mongoDB we no longer care about the google id
   because each instance inside our db will have a mongoDB id!
+  dig more into the npm google oauth20 package and figure out what is going on with internal
+  server error
   */
   done(null, user.id);
 });
@@ -25,19 +27,19 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback/',
+      callbackURL: '/auth/google/callback',
       proxy: true
     },
-    (accessToken, refreshToken, profile, cb, done) => {
+    (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleId: profile.id })
         .then(exisitingUser => {
           if (exisitingUser) {
             //we already have a record for the user use the done function and pass 2 params
-            done(null, exisitingUser, cb);
+            done(null, exisitingUser);
           } else {
             new User({ googleId: profile.id })
               .save()
-              .then(user => done(null, user, cb));
+              .then(user => done(null, user));
           }
         })
         .catch(err => {
