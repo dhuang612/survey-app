@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
@@ -25,11 +25,10 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL:
-        'https://lit-everglades-64717.herokuapp.com/auth/google/callback',
-      proxy: true
+      callbackURL: '/auth/google/callback',
+      passReqToCallback: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    (request, accessToken, refreshToken, profile, done) => {
       User.findOne({ googleId: profile.id })
         .then(exisitingUser => {
           if (exisitingUser) {
