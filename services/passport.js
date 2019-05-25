@@ -29,9 +29,20 @@ passport.use(
       proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-      User.findOrCreate({ googleId: profile.id }, function(err, user) {
-        return cb(err, user);
-      });
+      User.findOne({ googleId: profile.id })
+        .then(exisitingUser => {
+          if (exisitingUser) {
+            //we already have a record for the user use the done function and pass 2 params
+            done(null, exisitingUser);
+          } else {
+            new User({ googleId: profile.id })
+              .save()
+              .then(user => done(null, user));
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   )
 );
@@ -42,16 +53,7 @@ statement as the function
 
 passport google strategy code
 
- User.findOne({ googleId: profile.id }).then(exisitingUser => {
-        if (exisitingUser) {
-          //we already have a record for the user use the done function and pass 2 params
-          done(null, exisitingUser);
-        } else {
-          new User({ googleId: profile.id })
-            .save()
-            .then(user => done(null, user));
-        }
-      });
+ 
 
 
 
