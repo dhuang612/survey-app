@@ -46,14 +46,26 @@ passport.use(
     }
   )
 );
-
 /*
 Because we aren't returning anything in here we can pass the require 
 statement as the function
 
 passport google strategy code
 
- 
+  User.findOne({ googleId: profile.id })
+        .then(exisitingUser => {
+          if (exisitingUser) {
+            //we already have a record for the user use the done function and pass 2 params
+            done(null, exisitingUser);
+          } else {
+            new User({ googleId: profile.id })
+              .save()
+              .then(user => done(null, user));
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
 
 
