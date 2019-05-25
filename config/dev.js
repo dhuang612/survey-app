@@ -7,3 +7,8 @@ module.exports = {
     'mongodb+srv://admin:password2@emaily-kglzg.mongodb.net/test?retryWrites=true',
   cookieKey: 'grklmwkdmfwel[aogelkemgregefewfmwfaezw'
 };
+
+/*
+mongodb+srv://admin:password2@emaily-kglzg.mongodb.net/test?retryWrites=true
+
+*/

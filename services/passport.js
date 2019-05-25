@@ -10,6 +10,8 @@ passport.serializeUser((user, done) => {
   /*  
   After they are in our mongoDB we no longer care about the google id
   because each instance inside our db will have a mongoDB id!
+
+  https://stackoverflow.com/questions/14111850/passport-facebook-how-to-dynamically-set-callbackurl
   */
   done(null, user.id);
 });
@@ -25,9 +27,8 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: '/auth/google/callback',
-      proxy: true
-    },
+      callbackURL: '/auth/google/callback'
+    }, //https://stackoverflow.com/questions/14111850/passport-facebook-how-to-dynamically-set-callbackurl
     (accessToken, refreshToken, profile, done) => {
       User.findOne({ googleId: profile.id }).then(exisitingUser => {
         if (exisitingUser) {
