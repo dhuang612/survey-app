@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
@@ -26,18 +26,18 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: '/auth/google/callback',
-      passReqToCallback: true
+      proxy: true
     },
-    (request, accessToken, refreshToken, profile, done) => {
+    (accessToken, refreshToken, profile, cb, done) => {
       User.findOne({ googleId: profile.id })
         .then(exisitingUser => {
           if (exisitingUser) {
             //we already have a record for the user use the done function and pass 2 params
-            done(null, exisitingUser);
+            done(null, exisitingUser, cb);
           } else {
             new User({ googleId: profile.id })
               .save()
-              .then(user => done(null, user));
+              .then(user => done(null, user, cb));
           }
         })
         .catch(err => {
