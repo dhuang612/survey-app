@@ -29,7 +29,20 @@ passport.use(
       proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id }).then(exisitingUser => {
+      User.findOrCreate({ googleId: profile.id }, function(err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+
+/*
+Because we aren't returning anything in here we can pass the require 
+statement as the function
+
+passport google strategy code
+
+ User.findOne({ googleId: profile.id }).then(exisitingUser => {
         if (exisitingUser) {
           //we already have a record for the user use the done function and pass 2 params
           done(null, exisitingUser);
@@ -39,13 +52,10 @@ passport.use(
             .then(user => done(null, user));
         }
       });
-    }
-  )
-);
 
-/*
-Because we aren't returning anything in here we can pass the require 
-statement as the function
+
+
+
 
 
 */
