@@ -5,7 +5,15 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
 mongoose.connect(keys.mongoURI);
-const proxy = require('http-proxy');
+const http = require('http');
+const httpproxy = require('http-proxy');
+const proxy = httpproxy.createProxyServer({});
+http.createServer(function(req, res) {
+  proxy.web(req, res, {
+    target: 'http://lit-everglades-64717.herokuapp.com/'
+  });
+});
+
 const app = express();
 app.use(
   cookieSession({
@@ -30,9 +38,5 @@ clientID: 596213864696-87iuiau2g2psnntmuppbu7kk8em03lq8.apps.googleusercontent.c
 client secret: AiPzJmNHZZwYqGBm8RRjgKQF
 */
 
-module.exports = function(app) {
-  app.use(proxy('/auth/google', { target: 'http://localhost:5000/' }));
-  app.use(proxy('/api/*', { target: 'http://localhost:5000/' }));
-};
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
