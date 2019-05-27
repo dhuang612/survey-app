@@ -21,6 +21,11 @@ passport.deserializeUser((id, done) => {
     done(null, user);
   });
 });
+/*
+look into confirming that proxy is working correctly.
+https://github.com/jaredhanson/passport-oauth2/issues/59
+
+*/
 
 passport.use(
   new GoogleStrategy(
