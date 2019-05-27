@@ -5,14 +5,6 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
 mongoose.connect(keys.mongoURI);
-const http = require('http');
-const httpproxy = require('http-proxy');
-const proxy = httpproxy.createProxyServer({});
-http.createServer(function(req, res) {
-  proxy.web(req, res, {
-    target: 'http://lit-everglades-64717.herokuapp.com/'
-  });
-});
 
 const app = express();
 app.use(
