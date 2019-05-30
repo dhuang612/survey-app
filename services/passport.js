@@ -36,21 +36,15 @@ passport.use(
       userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
-      User.findOne({ googleId: profile.id })
-        .then(exisitingUser => {
-          if (exisitingUser) {
-            //we already have a record for the user use the done function and pass 2 params
-            done(null, exisitingUser);
-          } else {
-            new User({ googleId: profile.id })
-              .save()
-              .then(user => done(null, user));
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    async (accessToken, refreshToken, profile, done) => {
+      const exisitingUser = await User.findOne({ googleId: profile.id });
+
+      if (exisitingUser) {
+        //we already have a record for the user use the done function and pass 2 params
+        return done(null, exisitingUser);
+      }
+      const user = await new User({ googleId: profile.id }).save();
+      done(null, user);
     }
   )
 );
