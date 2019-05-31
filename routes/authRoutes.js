@@ -29,6 +29,8 @@ module.exports = app => {
     req.logout();
     res.send(req.user);
   });
+
+  //this will allow us to confirm if the user is signed in
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
   });
