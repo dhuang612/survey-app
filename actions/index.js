@@ -1,12 +1,8 @@
 import axios from 'axios';
 import { FETCH_USER } from './types';
-
-const fetchUser = () => {
-  //reduxthunk see a function and will call it immediately
-  return function(dispatch) {
-    //we are only using a relative path added another proxy.
-    axios
-      .get('/api/current_user')
-      .then(res => dispatch({ type: FETCH_USER, payload: res }));
-  };
-};
+//refactored fetchuser action
+export const fetchUser = () => async dispatch =>
+  dispatch({
+    type: FETCH_USER,
+    payload: (await axios.get('/api/current_user')).data
+  });
