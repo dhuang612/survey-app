@@ -8,22 +8,15 @@ module.exports = app => {
     })
   );
   //if there are errors related to logging in capture them.
-  app.get('/auth/google/callback', function(req, res, next) {
-    passport.authenticate('google', function(err, user, info) {
-      if (err) {
-        return console.log(next(err));
-      }
-      if (!user) {
-        return res.redirect('/');
-      }
-      req.logIn(user, function(err) {
-        if (err) {
-          return console.log(next(err));
-        }
-        return res.redirect('/');
-      });
-    })(req, res, next);
-  });
+  app.get(
+    '/auth/google/callback',
+    //middleware
+    passport.authenticate('google'),
+    //after we successfully log in we add in a redirect to get to the right place
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     req.logout();
