@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+  //helper function
   renderContent() {
     switch (this.props.auth) {
       case null:
@@ -15,7 +16,7 @@ class Header extends Component {
       default:
         return (
           <li>
-            <a href="/">Sign out</a>
+            <a href="/api/logout">Sign out</a>
           </li>
         );
     }
