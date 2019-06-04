@@ -1,5 +1,5 @@
 const express = require('express');
-
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -7,6 +7,9 @@ const keys = require('./config/keys');
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+//allows us to view post req.body object
+app.use(bodyParser.json()); //our mongodb requires json
+//express middleware wire up here!!!!!!! <LOOK THIS UP>
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
