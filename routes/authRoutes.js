@@ -27,11 +27,6 @@ module.exports = app => {
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
   });
-
-  //setup test route for stripe
-  app.get('/api/stripe', (req, res) => {
-    console.log(stripe);
-  });
 };
 
 /*

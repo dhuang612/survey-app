@@ -18,8 +18,11 @@ app.use(passport.session());
 //user's schema that we need to require mongoose order of operations matter
 require('./models/User');
 require('./services/passport');
+
+//requiring in the routes we set
 //this can be left as a require statement because it doesn't need to be passed anything.
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 /*
 you use google developers console to gen the application
 you then pass in the client ID
