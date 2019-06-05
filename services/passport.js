@@ -42,7 +42,7 @@ passport.use(
       if (exisitingUser) {
         //we already have a record for the user use the done function and pass 2 params
         return done(null, exisitingUser);
-      }
+      } //actually saving to our mongodb
       const user = await new User({ googleId: profile.id }).save();
       done(null, user);
     }
