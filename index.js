@@ -26,15 +26,19 @@ require('./services/passport');
 //this can be left as a require statement because it doesn't need to be passed anything.
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
-/*
-you use google developers console to gen the application
-you then pass in the client ID
-use 
-http://localhost:5000/auth/google/callback
 
-clientID: 596213864696-87iuiau2g2psnntmuppbu7kk8em03lq8.apps.googleusercontent.com
-client secret: AiPzJmNHZZwYqGBm8RRjgKQF
-*/
+//logic for handling react router routes once we are in prod
+if (process.env.NODE_ENV === 'production') {
+  //is epxress looking for a specific file check here
+  app.use(express.static('client/build'));
+
+  //express will server up index.html
+  //if express doesn't recognize the route here is the catchall location for anything else
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
