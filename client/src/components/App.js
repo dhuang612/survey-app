@@ -8,7 +8,6 @@ import Header from './Header';
 import Landing from './Landing';
 const Dashboard = () => <h2>Dashboard</h2>;
 const SurveyNew = () => <h2>SurveyNew</h2>;
-const Surveytest = () => <h2>SurveyNew</h2>;
 
 class App extends Component {
   //is now considered the default method for adding ajax.
