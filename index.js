@@ -27,6 +27,7 @@ require('./services/passport');
 //this can be left as a require statement because it doesn't need to be passed anything.
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 //logic for handling react router routes once we are in prod
 if (process.env.NODE_ENV === 'production') {
