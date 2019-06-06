@@ -30,7 +30,7 @@ require('./routes/billingRoutes')(app);
 //logic for handling react router routes once we are in prod
 if (process.env.NODE_ENV === 'production') {
   //is epxress looking for a specific file check here
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static('client', 'build'));
 
   //express will server up index.html
   //if express doesn't recognize the route here is the catchall location for anything else
