@@ -20,6 +20,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //user's schema that we need to require mongoose order of operations matter
 require('./models/User');
+require('./models/Survey');
 require('./services/passport');
 
 //requiring in the routes we set
