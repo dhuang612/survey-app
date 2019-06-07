@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const Survey = mongoose.model('surveys');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
+const Mailer = require('../services/Mailer');
+const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 module.exports = app => {
   app.post('/api/surveys', requireLogin, requireCredits, (req, res) => {
     //we are using body parser
@@ -18,5 +20,8 @@ module.exports = app => {
       _user: req.user.id,
       dateSent: Date.now()
     });
+
+    //send an email out
+    const mailer = new Mailer(survey, surveyTemplate(survey));
   });
 };
