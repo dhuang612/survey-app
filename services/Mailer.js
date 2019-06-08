@@ -11,7 +11,24 @@ class Mailer extends helper.Mail {
     this.from_email = new helper.Email('no-reply@emaily.com');
     this.subject = subject;
     this.body = new helper.Content('text/html', content);
-    this.recipients = this.fromatAddresses(recipients);
+    //array of the helper email function that contains a list of recipients
+    this.recipients = this.formatAddresses(recipients);
+    //built in function to add the body of content to the email
+    this.addContent(this.body);
+    this.addClickTracking();
+  }
+  //helper functions
+  formatAddresses(recipients) {
+    return recipients.map(({ email }) => {
+      return new helper.Email(email);
+    });
+  }
+  addClickTracking() {
+    const trackingSettings = new helper.TrackingSettings();
+    const clickTracking = new helper.clickTracking(true, true);
+
+    trackingSettings.setClickTracking(clickTracking);
+    this.addTrackingSettings(trackingSettings);
   }
 }
 module.exports = Mailer;
