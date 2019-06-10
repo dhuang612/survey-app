@@ -10,10 +10,6 @@ import reduxThunk from 'redux-thunk';
 import App from './components/App';
 import reducers from './reducers';
 
-//temp adding in axios
-import axios from 'axios';
-window.axios = axios;
-
 //stand in dummy so that redux doesnt crash with an error
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 ReactDOM.render(
