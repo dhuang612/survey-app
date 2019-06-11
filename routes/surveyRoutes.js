@@ -7,12 +7,17 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 module.exports = app => {
+  //added in a new route to return people who respond feedback
+  app.get('/api/surveys/feedback', (req, res) => {
+    res.send('Thanks for the feedback!');
+  });
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     //we are using body parser
     const { title, subject, body, recipients } = req.body;
 
     //new instance of a survey
     const survey = new Survey({
+      //add in logic for redirect link after feedback.
       title,
       subject,
       body,
