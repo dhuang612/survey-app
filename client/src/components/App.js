@@ -3,11 +3,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-//dummy routes for testing.
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
-const SurveyNew = () => <h2>SurveyNew</h2>;
+import SurveyNew from './surveys/SurveyNew';
+//dummy route
+const SurveyForm = () => <h1>This is the survey form</h1>;
 
 class App extends Component {
   //is now considered the default method for adding ajax.
