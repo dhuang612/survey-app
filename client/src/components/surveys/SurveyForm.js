@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 //very similar setup to redux connect helper & allows us to talk to redux store!
 import { reduxForm, Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 //onSubmit below is passed to use directly from redux form we then call it and set it to submit
 import SurveyField from './SurveyField';
 
@@ -32,7 +33,13 @@ class SurveyForm extends Component {
       <div>
         <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
           {this.renderFields()}
-          <button type="submit">Submit</button>
+          <Link to="/surveys" className="red btn-flat white-text">
+            Cancel
+          </Link>
+          <button className="teal btn-flat right white-text" type="submit">
+            Next
+            <i className="material-icons right ">done</i>
+          </button>
         </form>
       </div>
     );
