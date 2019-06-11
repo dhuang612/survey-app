@@ -9,7 +9,6 @@ import Dashboard from './Dashboard';
 import SurveyNew from './surveys/SurveyNew';
 
 //dummy route
-const SurveyForm = () => <h1>This is the survey form</h1>;
 
 class App extends Component {
   //is now considered the default method for adding ajax.
