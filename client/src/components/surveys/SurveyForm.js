@@ -49,7 +49,12 @@ function validate(values) {
   const errors = {};
   if (!values.title) {
     errors.title = 'You must provide a title';
-    console.log(errors);
+  }
+  if (!values.subject) {
+    errors.subject = 'You must provide a subject line!';
+  }
+  if (!values.body) {
+    errors.body = 'You must include a message!';
   }
   return errors;
 }
