@@ -6,7 +6,7 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 //onSubmit below is passed to use directly from redux form we then call it and set it to submit
 import SurveyField from './SurveyField';
-
+//you can include a custom errors message by adding in a new value
 const FIELDS = [
   { label: 'Survey Title', name: 'title' },
   { label: 'Subject Line', name: 'subject' },
@@ -47,15 +47,12 @@ class SurveyForm extends Component {
 }
 function validate(values) {
   const errors = {};
-  if (!values.title) {
-    errors.title = 'You must provide a title';
-  }
-  if (!values.subject) {
-    errors.subject = 'You must provide a subject line!';
-  }
-  if (!values.body) {
-    errors.body = 'You must include a message!';
-  }
+  _.each(FIELDS, ({ name }) => {
+    //same as asking if (values.var === null || '')
+    if (!values[name]) {
+      errors[name] = 'You must include a value';
+    }
+  });
   return errors;
 }
 
