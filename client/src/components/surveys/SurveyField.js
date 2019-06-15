@@ -7,6 +7,7 @@ redux form allows us to wiring up the event handlers for changes to this input
 import React from 'react';
 //we can access props even if we don't create a component
 export default ({ input, label, meta: { error, touched } }) => {
+  console.log(input);
   return (
     <div>
       <label>{label}</label>

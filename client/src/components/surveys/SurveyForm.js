@@ -57,10 +57,11 @@ function validate(values) {
   });
   return errors;
 }
-
+//redux form helper
 export default reduxForm({
   validate,
-  form: 'surveyForm'
+  form: 'surveyForm',
+  destroyOnUnmount: false
 })(SurveyForm);
 /*
  <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
