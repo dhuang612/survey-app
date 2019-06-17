@@ -43,3 +43,9 @@ module.exports = app => {
     }
   });
 };
+/*
+
+ (req, res) => {
+      res.redirect('/surveys');
+    }
+*/
