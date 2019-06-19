@@ -16,12 +16,17 @@ module.exports = app => {
     res.send('Thanks for the feedback!');
   });
   app.post('/api/surveys/webhooks', (req, res) => {
-    const events = _.map(req.body, event => {
-      const pathname = new URL(event.url).pathname;
+    const events = _.map(req.body, ({ url, email }) => {
+      const pathname = new URL(url).pathname;
       //survey id and path new parser
       const p = new Path('/api/surveys/:surveyId/:choice');
-      console.log(p.test(pathname));
+      const match = p.test(pathname);
+      if (match) {
+        //return an obj with the info we want
+        return { email, surveyId: match.surveyId, choice: match.choice };
+      }
     });
+    console.log(events);
   });
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     //we are using body parser
