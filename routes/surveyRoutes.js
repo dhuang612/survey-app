@@ -12,7 +12,7 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 module.exports = app => {
   //added in a new route to return people who respond feedback
-  app.get('/api/surveys/feedback', (req, res) => {
+  app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send('Thanks for the feedback!');
   });
   app.post('/api/surveys/webhooks', (req, res) => {
@@ -26,7 +26,10 @@ module.exports = app => {
         return { email, surveyId: match.surveyId, choice: match.choice };
       }
     });
-    console.log(events);
+    const compactEvents = _.compact(events);
+    const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');
+    console.log(uniqueEvents);
+    res.send({});
   });
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     //we are using body parser
