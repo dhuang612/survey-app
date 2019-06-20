@@ -17,7 +17,7 @@ module.exports = app => {
   });
   app.post('/api/surveys/webhooks', (req, res) => {
     const p = new Path('/api/surveys/:surveyId/:choice');
-    const events = _.chain(req.body)
+    _.chain(req.body)
       .filter(({ event, email, url }) => email && url && event === 'click')
       .map(({ url, email }) => {
         const match = p.test(new URL(url).pathname);
@@ -28,8 +28,28 @@ module.exports = app => {
       })
       .compact()
       .uniqBy('email', 'surveyId')
+      .each(({ surveyId, email, choice }) => {
+        Survey.updateOne(
+          {
+            //mongodb syntax requires id with a _
+            _id: surveyId,
+
+            recipients: {
+              $elemMatch: {
+                email: email,
+                responded: false
+              }
+            }
+          },
+
+          {
+            $inc: { [choice]: 1 },
+            $set: { 'recipients.$.responded': true }
+          } //executes this mongo query
+        ).exec();
+      })
       .value();
-    console.log(events);
+
     res.send({});
   });
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {

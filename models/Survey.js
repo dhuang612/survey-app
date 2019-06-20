@@ -7,8 +7,8 @@ const surveySchema = new Schema({
   subject: String,
   body: String,
   recipients: [RecipientSchema],
-  yes: { type: Number, default: 0 },
-  no: { type: Number, default: 0 },
+  Yes: { type: Number, default: 0 },
+  No: { type: Number, default: 0 },
   //every survey will belong to a single user who has paid for credits
   _user: { type: Schema.Types.ObjectId, ref: 'User' },
   dateSent: Date,
