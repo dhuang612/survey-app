@@ -11,6 +11,14 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 module.exports = app => {
+  app.get('/api/surveys', requireLogin, async (req, res) => {
+    //because we are using req.user.id we want to make sure the user is signed in
+    const surveys = await Survey.find({ _user: req.user.id }).select({
+      recipients: false
+    });
+    //once we have the code from our db we send it off as the requested info
+    res.send(surveys);
+  });
   //added in a new route to return people who respond feedback
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send('Thanks for the feedback!');
@@ -44,7 +52,7 @@ module.exports = app => {
 
           {
             $inc: { [choice]: 1 },
-            $set: { 'recipients.$.responded': true }
+            $set: { 'recipients.$.responded': true, lastResponded: new Date() }
           } //executes this mongo query
         ).exec();
       })

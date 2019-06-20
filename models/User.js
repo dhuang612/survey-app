@@ -13,5 +13,9 @@ const userSchema = new Schema({
     default: 0
   }
 });
-
+//when we generate this new schema we automatically get a .id generated
 mongoose.model('users', userSchema);
+/*
+We are then using this .id as a reference point to reference some specific user
+
+*/
