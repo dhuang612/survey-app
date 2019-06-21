@@ -11,6 +11,7 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 module.exports = app => {
+  //this gets the surveys and passes them to the front.
   app.get('/api/surveys', requireLogin, async (req, res) => {
     //because we are using req.user.id we want to make sure the user is signed in
     const surveys = await Survey.find({ _user: req.user.id }).select({
@@ -23,6 +24,7 @@ module.exports = app => {
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.send('Thanks for the feedback!');
   });
+  //this sends the survey results to mongo
   app.post('/api/surveys/webhooks', (req, res) => {
     const p = new Path('/api/surveys/:surveyId/:choice');
     _.chain(req.body)
@@ -60,6 +62,7 @@ module.exports = app => {
 
     res.send({});
   });
+  //creates a new survey
   app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
     //we are using body parser
     const { title, subject, body, recipients } = req.body;
