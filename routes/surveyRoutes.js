@@ -29,6 +29,7 @@ module.exports = app => {
     const p = new Path('/api/surveys/:surveyId/:choice');
     _.chain(req.body)
       .filter(({ event, email, url }) => email && url && event === 'click')
+
       .map(({ url, email }) => {
         const match = p.test(new URL(url).pathname);
         if (match) {
