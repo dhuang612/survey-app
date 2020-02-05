@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
 const app = express();
 //allows us to view post req.body object
@@ -31,7 +31,7 @@ require('./routes/surveyRoutes')(app);
 
 //logic for handling react router routes once we are in prod
 if (process.env.NODE_ENV === 'production') {
-  //is epxress looking for a specific file check here
+  //is express looking for a specific file check here to build out the react side
   app.use(express.static('client/build'));
 
   //express will server up index.html
