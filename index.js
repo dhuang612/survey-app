@@ -6,6 +6,7 @@ const passport = require('passport');
 const keys = require('./config/keys');
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true });
 
+
 const app = express();
 //allows us to view post req.body object
 app.use(bodyParser.json()); //our mongodb requires json
